@@ -1,0 +1,56 @@
+LAB 6
+
+Zadanie 1
+
+pkt1
+SELECT AVG(waga) FROM kreatura WHERE rodzaj='wiking';
+
+pkt2
+SELECT rodzaj, COUNT(nazwa), AVG(waga) FROM kreatura GROUP BY rodzaj;
+
+pkt3
+SELECT rodzaj, AVG(2020-YEAR(dataUr)) FROM kreatura GROUP BY rodzaj;
+
+Zadanie 2
+
+pkt1
+SELECT rodzaj, SUM(waga) FROM zasob GROUP BY rodzaj;
+
+pkt2
+SELECT nazwa, AVG(waga) FROM zasob GROUP BY nazwa HAVING SUM(ilosc)>3 AND SUM(waga)>10;
+
+pkt3
+SELECT rodzaj, COUNT(DISTINCT(nazwa)) FROM zasob WHERE ilosc>=2 GROUP BY rodzaj;
+
+Zadanie 3
+
+pkt1
+SELECT nazwa, SUM(ilosc) from kreatura, ekwipunek WHERE kreatura.idKreatury=ekwipunek.idKreatury GROUP BY nazwa;
+lub
+SELECT nazwa, SUM(ilosc) from kreatura INNER JOIN ekwipunek ON kreatura.idKreatury=ekwipunek.idKreatury GROUP BY nazwa;
+
+pkt2
+SELECT kreatura.idKreatury, kreatura.nazwa, zasob.nazwa FROM kreatura, ekwipunek, zasob WHERE ekwipunek.idZasobu=zasob.idZasobu AND kreatura.idKreatury=ekwipunek.idKreatury;
+
+pkt3
+SELECT k.nazwa, k.idKreatury, e.idKreatury from kreatura k LEFT JOIN ekwipunek e ON k.idKreatury=e.idKreatury where e.idKreatury IS NULL;
+
+Zadanie 4
+
+pkt1
+SELECT kreatura.nazwa, zasob.nazwa FROM kreatura NATURAL JOIN ekwipunek INNER JOIN zasob ON zasob.idzasobu=ekwipunek.idzasobu WHERE YEAR(kreatura.dataUr) between 1670 AND 1680;
+
+pkt2
+SELECT kreatura.nazwa, ekwipunek.idZasobu FROM kreatura INNER JOIN ekwipunek ON kreatura.idKreatury=ekwipunek.idKreatury INNER JOIN zasob ON ekwipunek.idZasobu=zasob.idZasobu WHERE zasob.rodzaj='jedzenie' ORDER BY dataUr ASC LIMIT 5;
+
+pkt3
+SELECT CONCAT(tabk1.nazwa, " - ", tabk2.nazwa) FROM kreatura AS tabk1, kreatura AS tabk2
+WHERE tabk1.idKreatury - tabk2.idKreatury=5;
+
+Zadanie 5
+
+pkt1
+SELECT k.rodzaj, AVG(e.ilosc*z.waga), SUM(e.ilosc) FROM kreatura AS k, ekwipunek AS e, zasob AS z WHERE k.idKreatury=e.idKreatury AND e.idZasobu=z.idZasobu AND k.rodzaj NOT IN ('malpa','waz') GROUP BY rodzaj HAVING SUM(e.ilosc) < 30;
+
+pkt2
+//NIE UMIEM 
